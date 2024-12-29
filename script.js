@@ -2,6 +2,11 @@ const html = document.querySelector('html');
 const focoBt = document.querySelector(".app__card-button--foco");
 const bt_descanso_curto = document.querySelector(".app__card-button--curto");
 const bt_descanso_longo = document.querySelector(".app__card-button--longo");
+const botaoComecarePausar = document.querySelector('#start-pause');
+
+//Temporizador
+let tempoDecorridoEmSegundos = 5;
+let intervaloId = null;
 
 const botoes = document.querySelectorAll('.app__card-button');
 
@@ -11,6 +16,10 @@ const musicaFocoInput = document.querySelector('#alternar-musica')
 //Pegando o audio
 const musica = new Audio('./sons/luna-rise-part-one.mp3');
 musica.loop = true;
+
+const audioPlay = new Audio('./sons/play.wav');
+const audioPausa = new Audio ('./sons/pause.mp3');
+const audioTerminou = new Audio ('./sons/beep.mp3');
 
 //Mudar Imagem
 const imagem = document.querySelector('.app__image'); 
@@ -73,3 +82,39 @@ musicaFocoInput.addEventListener('change', () => {
         musica.pause()
     }
 })
+
+//Manipulando o Temporizador - Set interval (não entendi muito bem)
+const contagemRegressiva = () => {
+    if(tempoDecorridoEmSegundos <= 0){
+        audioTerminou.play();
+        zerar()
+        alert('Tempo Finalizado');
+        return //Serve para interromper a execução do código
+    }
+    tempoDecorridoEmSegundos -= 1
+    console.log('Temporizador: ' + tempoDecorridoEmSegundos)
+}
+
+botaoComecarePausar.addEventListener('click', iniciarouPausar);
+
+function iniciarouPausar (){
+    if (intervaloId){
+        audioPausa.play();
+        zerar()
+        return
+    }
+    intervaloId = setInterval(contagemRegressiva,1000);
+    audioPlay.play();
+    
+}
+
+/* intevaloID: Por que precisamos desse identificador?
+Porque ele é a única maneira de parar o cronômetro! 
+Se você não guardar esse identificador, não terá como interromper a execução repetida da função contagemRegressiva. 
+Seria como ter um cronômetro que você iniciou, mas sem botão para pará-lo.*/
+
+function zerar (){
+    clearInterval(intervaloId)
+    intervaloId = null
+}
+//Limpar o meu intervalo depois que o valor for negativo
