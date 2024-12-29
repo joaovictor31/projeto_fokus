@@ -3,6 +3,8 @@ const focoBt = document.querySelector(".app__card-button--foco");
 const bt_descanso_curto = document.querySelector(".app__card-button--curto");
 const bt_descanso_longo = document.querySelector(".app__card-button--longo");
 const botaoComecarePausar = document.querySelector('#start-pause');
+const iniciarouPausarBt = document.querySelector('#start-pause span') //Pego extamente onde a palavra começar está inserida
+let iconePlayPause = document.querySelector('.app__card-primary-butto-icon');
 
 //Temporizador
 let tempoDecorridoEmSegundos = 5;
@@ -87,8 +89,8 @@ musicaFocoInput.addEventListener('change', () => {
 const contagemRegressiva = () => {
     if(tempoDecorridoEmSegundos <= 0){
         audioTerminou.play();
-        zerar()
         alert('Tempo Finalizado');
+        zerar()
         return //Serve para interromper a execução do código
     }
     tempoDecorridoEmSegundos -= 1
@@ -105,6 +107,9 @@ function iniciarouPausar (){
     }
     intervaloId = setInterval(contagemRegressiva,1000);
     audioPlay.play();
+    iconePlayPause.setAttribute('src', `./imagens/pause.png`)
+    iniciarouPausarBt.textContent = "Pausar"
+    
     
 }
 
@@ -115,6 +120,8 @@ Seria como ter um cronômetro que você iniciou, mas sem botão para pará-lo.*/
 
 function zerar (){
     clearInterval(intervaloId)
+     iniciarouPausarBt.textContent = "Começar"
+     iconePlayPause.setAttribute('src', `./imagens/play_arrow.png`)
     intervaloId = null
 }
 //Limpar o meu intervalo depois que o valor for negativo
