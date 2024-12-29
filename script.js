@@ -6,6 +6,8 @@ const botaoComecarePausar = document.querySelector('#start-pause');
 const iniciarouPausarBt = document.querySelector('#start-pause span') //Pego extamente onde a palavra começar está inserida
 let iconePlayPause = document.querySelector('.app__card-primary-butto-icon');
 
+const tempoNaTela = document.querySelector('#timer')
+
 //Temporizador
 let tempoDecorridoEmSegundos = 5;
 let intervaloId = null;
@@ -94,7 +96,7 @@ const contagemRegressiva = () => {
         return //Serve para interromper a execução do código
     }
     tempoDecorridoEmSegundos -= 1
-    console.log('Temporizador: ' + tempoDecorridoEmSegundos)
+    mostrarTempo()
 }
 
 botaoComecarePausar.addEventListener('click', iniciarouPausar);
@@ -125,3 +127,10 @@ function zerar (){
     intervaloId = null
 }
 //Limpar o meu intervalo depois que o valor for negativo
+
+function mostrarTempo (){
+    const tempo = tempoDecorridoEmSegundos;
+    tempoNaTela.innerHTML = `${tempo}`
+}
+
+mostrarTempo()
