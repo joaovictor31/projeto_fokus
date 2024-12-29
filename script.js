@@ -9,7 +9,7 @@ let iconePlayPause = document.querySelector('.app__card-primary-butto-icon');
 const tempoNaTela = document.querySelector('#timer')
 
 //Temporizador
-let tempoDecorridoEmSegundos = 5;
+let tempoDecorridoEmSegundos = 1500;
 let intervaloId = null;
 
 const botoes = document.querySelectorAll('.app__card-button');
@@ -33,6 +33,7 @@ const titulo = document.querySelector(".app__title");
 
 
 function alterarContexto(contexto) {
+    mostrarTempo()
     botoes.forEach(function(contexto){
             contexto.classList.remove('active')
         })
@@ -65,16 +66,19 @@ function alterarContexto(contexto) {
 focoBt.addEventListener('click', () => {
     alterarContexto("foco");
     focoBt.classList.add('active')
+    tempoDecorridoEmSegundos = 1500;
 })
 
 bt_descanso_curto.addEventListener('click', () => {
     alterarContexto("descanso-curto");
     bt_descanso_curto.classList.add('active')
+    tempoDecorridoEmSegundos = 300;
 })
 
 bt_descanso_longo.addEventListener('click', () => {
     alterarContexto("descanso-longo"); 
     bt_descanso_longo.classList.add('active')
+    tempoDecorridoEmSegundos = 900; //900 segundos 15 minutos = (60 x 15)
 
 })
 
@@ -128,9 +132,10 @@ function zerar (){
 }
 //Limpar o meu intervalo depois que o valor for negativo
 
-function mostrarTempo (){
-    const tempo = tempoDecorridoEmSegundos;
-    tempoNaTela.innerHTML = `${tempo}`
+function mostrarTempo() {
+    const tempo = new Date(tempoDecorridoEmSegundos * 1000)
+    const tempoFormatado = tempo.toLocaleString('pt-Br', {minute: '2-digit', second: '2-digit'})
+    tempoNaTela.innerHTML = `${tempoFormatado}`
 }
 
 mostrarTempo()
