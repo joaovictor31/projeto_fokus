@@ -5,7 +5,12 @@ const bt_descanso_longo = document.querySelector(".app__card-button--longo");
 
 const botoes = document.querySelectorAll('.app__card-button');
 
+//Botão de Música checkbox
 const musicaFocoInput = document.querySelector('#alternar-musica')
+
+//Pegando o audio
+const musica = new Audio('./sons/luna-rise-part-one.mp3');
+musica.loop = true;
 
 //Mudar Imagem
 const imagem = document.querySelector('.app__image'); 
@@ -60,3 +65,11 @@ bt_descanso_longo.addEventListener('click', () => {
 
 })
 
+//Alterando a música de ativa para pausada
+musicaFocoInput.addEventListener('change', () => {
+    if(musica.paused){
+        musica.play()
+    } else {
+        musica.pause()
+    }
+})
